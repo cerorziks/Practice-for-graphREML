@@ -60,20 +60,20 @@ qsub -I -l mem=1gb,walltime=8:00:00                       # interactive session 
 qselect -u $USER -s R | xargs qstat -f | egrep "^Job|resources_used.cpupercent|resources_used.mem|resources_used.walltime|exec_vnode"
 ```
 
-- `qselect -u $USER -s R` — lists job IDs for your **R**unning jobs (`-s Q` = Queued, `-s H` = Held)
-- `| xargs qstat -f` — pipes each job ID into `qstat -f` for its full attribute block
-- `| egrep "..."` — filters down to just CPU%, memory, walltime used, and execution node
+- `qselect -u $USER -s R` : lists job IDs for your **R**unning jobs (`-s Q` = Queued, `-s H` = Held)
+- `| xargs qstat -f` : pipes each job ID into `qstat -f` for its full attribute block
+- `| egrep "..."` : filters down to just CPU%, memory, walltime used, and execution node
 
 Comparing `resources_used.mem` against what you requested tells you if you're over-requesting (wasting shared capacity) or under-requesting (risking an OOM kill).
 
-### `jobperf` — live resource dashboard
+### `jobperf` : live resource dashboard
 
 ```bash
 module load jobperf/0.1.0
 jobperf -http -http-disable-auth -w <jobid>     # NOTE: no ".hpcpbs02" suffix on the job ID
 ```
 
-Starts a small web server, prints a URL with live CPU/memory/GPU graphs. `Ctrl+C` stops watching — does not kill the job.
+Starts a small web server, prints a URL with live CPU/memory/GPU graphs. `Ctrl+C` stops watching ; does not kill the job.
 
 For long jobs, have it self-monitor and save to a database:
 
@@ -92,7 +92,7 @@ ssh-keygen                              # hit Enter through all prompts (no pass
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 
-> **Caution:** never copy the generated `~/.ssh/id_rsa` file off the HPC — it grants passwordless access to your account.
+> **Caution:** never copy the generated `~/.ssh/id_rsa` file off the HPC ; it grants passwordless access to your account.
 
 ---
 
@@ -130,13 +130,13 @@ Either side can be local (plain path) or remote (`user@host:path`).
 
 ```bash
 # Local -> cluster
-scp myfile.txt tsheringD@hpcapp01.adqimr.ad.lan:/working/lab_tracyo/tsheringD/graphld/
+scp myfile.txt user@admin.ad.lan:/working/filelocation/
 
 # Cluster -> local (run FROM your local machine)
-scp tsheringD@hpcapp01.adqimr.ad.lan:/working/.../ecac2018.tsv .
+scp user@admin.ad.lan:/working/filelocation/.../local/path .
 
 # Whole directory, recursively
-scp -r tsheringD@hpcapp01.adqimr.ad.lan:/working/.../ecac2018_run1/ .
+scp -r user@admin.ad.lan:/working/filelocation/.../local/path/ .
 ```
 
 | Flag | Meaning |
@@ -154,8 +154,8 @@ scp -r tsheringD@hpcapp01.adqimr.ad.lan:/working/.../ecac2018_run1/ .
 Preferred over `scp` for large files or repeated syncs, since it only transfers what's changed and can resume interrupted transfers.
 
 ```bash
-rsync -avz tsheringD@hpcapp01.adqimr.ad.lan:/working/.../runs/ ./local_runs/
-rsync -avzP tsheringD@hpcapp01.adqimr.ad.lan:/working/.../ecac2018.tsv .   # -P shows progress + allows resume
+rsync -avz user@admin.ad.lan:/working/filelocation/.../runs/ ./local_runs/
+rsync -avzP user@admin.ad.lan:/working/filelocation/working/.../local_file .   # -P shows progress + allows resume
 ```
 
 - `-a` = archive mode (preserves permissions, timestamps, symlinks, recurses into directories)
