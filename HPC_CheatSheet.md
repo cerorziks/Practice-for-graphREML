@@ -8,7 +8,7 @@ Job monitoring, file transfer, text processing, and other essentials for working
 
 ## 1. Submitting and Checking Jobs
 
-### `qsub` — submit a job
+### `qsub`  submit a job
 
 ```bash
 qsub <<<myscript.pbs>>>
@@ -25,7 +25,7 @@ qsub -I -l mem=<<<1gb>>>,walltime=<<<8:00:00>>>
 
 ---
 
-### `qstat` — check job/queue status
+### `qstat` check job/queue status
 
 ```bash
 qstat -u $USER
@@ -57,7 +57,7 @@ No placeholders here; this is generic for all your jobs.
 
 ---
 
-### `jobperf` — live resource dashboard
+### `jobperf` live resource dashboard
 
 ```bash
 module load jobperf/0.1.0
@@ -113,7 +113,7 @@ qselect -ts.gt.<<<01210900>>> -ts.lt.<<<01211000>>> -u $USER | xargs qdel
 
 ## 4. File Transfer (`scp`, `rsync`)
 
-### `scp` — copy files securely
+### `scp` copy files securely
 
 ```bash
 scp <<<myfile.txt>>> user@hpcapp:<<< /path/to/workdir/ >>>
@@ -130,7 +130,7 @@ scp -r user@hpcapp:<<< /path/to/run_directory/ >>> .
 
 ---
 
-### `rsync` — smarter, resumable copying
+### `rsync` smarter, resumable copying
 
 ```bash
 rsync -avz user@hpcapp:<<< /path/to/runs/ >>> ./<<<local_runs>>>/
@@ -191,7 +191,7 @@ find . -iname "<<<*pattern*>>>"
 
 ---
 
-## 6. `sed` — Editing Text Streams
+## 6. `sed` Editing Text Streams
 
 ### Basic substitution
 
@@ -234,7 +234,7 @@ sed 's/[[:space:]]\+/ /g' <<<file.txt>>>
 
 ---
 
-## 7. `awk` — Column-Based Text Processing
+## 7. `awk` Column-Based Text Processing
 
 ```bash
 awk '{print $<<<1>>>}' <<<file.txt>>>
